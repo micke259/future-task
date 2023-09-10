@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   
   const dispatch = useDispatch()
   
-  const { sortedBy, category, query, maxResults } = useSelector((state: RootState) => state.filters); 
+  const { sortedBy, category, query, maxResults, loading } = useSelector((state: RootState) => state.filters); 
 
   
 
@@ -51,7 +51,7 @@ const Header: React.FC = () => {
           fontWeight: 'bold',
         }}
       >
-        Header
+        Поиск книг
       </Typography>
       <TextField
         value={query}
@@ -65,12 +65,12 @@ const Header: React.FC = () => {
         }}
         InputProps={{
           endAdornment: (
-            <IconButton edge='end' onClick={()=>handleSearch({category , sortedBy, maxResults, query}, dispatch)}>
+            <IconButton edge='end' onClick={()=>handleSearch({category , sortedBy, maxResults, query, loading}, dispatch)}>
               <SearchIcon />
             </IconButton>
           ),
         }}
-        onKeyDown={e => {e.key ==="Enter" && handleSearch({category , sortedBy, maxResults, query}, dispatch)}}
+        onKeyDown={e => {e.key ==="Enter" && handleSearch({category , sortedBy, maxResults, query, loading}, dispatch)}}
       />
       <Box
         sx={{

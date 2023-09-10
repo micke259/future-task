@@ -1,27 +1,29 @@
-import { Box, Typography, Button } from '@mui/material'
-import React, { Fragment } from 'react'
+import { Box, Typography, Button, CircularProgress } from '@mui/material'
+import React, { Fragment, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from '../../API/store'
-import { Book, setMaxResults } from '../../API/filterSlice'
-import { handleSearch } from '../../API/fetchBooks'
+import { Book} from '../../API/filterSlice'
+
 
 
 const BooksList: React.FC = () => {
   const navigate = useNavigate();
-  const { data, maxResults } = useSelector((state: RootState) => state.filters);
- 
-  const dispatch = useDispatch()
-  const { sortedBy, category, query} = useSelector((state: RootState) => state.filters); 
- 
+  const { data, loading } = useSelector((state: RootState) => state.filters);
 
- const handleLoad  = ()=>{
-	handleSearch({sortedBy, category, query, maxResults}, dispatch)
- }
+
+ 
 
   return (
+	
     <Fragment>
-      <Box sx={{
+	  {loading ? <Box sx={{display:'flex', justifyContent:"center"}}> 
+		<CircularProgress 
+			size={200} 
+			thickness={2}/>
+		</Box>
+			 : 
+	  <Box sx={{
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap', 
@@ -50,14 +52,8 @@ const BooksList: React.FC = () => {
           </Box>
         ))}
       </Box>
-
+}
      
-      <Button
-        variant="contained"
-        onClick={handleLoad}
-      >
-        Загрузить ещё
-      </Button>
     </Fragment>
   )
 }

@@ -21,6 +21,7 @@ export interface FilterState {
   category: string;
   query: string;
   data:Book[]
+  loading:boolean
 }
 
 const initialState: FilterState = {
@@ -28,7 +29,8 @@ const initialState: FilterState = {
   sortedBy: 'relevance',
   category: 'all',
   query: '',
-  data: []
+  data: [],
+  loading: false
 };
 
 const filterSlice = createSlice({
@@ -49,10 +51,13 @@ const filterSlice = createSlice({
     },
     setMaxResults: (state, action:PayloadAction<number>)=>{
       state.maxResults = action.payload
+    },
+    setLoading:(state, action:PayloadAction<boolean>)=>{
+      state.loading = action.payload
     }
 
   },
 });
 
-export const { setSortedBy, setCategory, setQuery, setBooks, setMaxResults } = filterSlice.actions;
+export const { setSortedBy, setCategory, setQuery, setBooks, setMaxResults, setLoading } = filterSlice.actions;
 export default filterSlice.reducer;
